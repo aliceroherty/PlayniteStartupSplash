@@ -13,3 +13,9 @@ The implementation that cause this added delay is the best way I have found so f
 ## Setup
 
 The ideal environment and use case for this plugin would be to have Playnite run on Windows startup in the background and have the splash screen show when switching to fullscreen mode. I believe this will get the splash screen to show a bit quicker.
+
+## Credits
+
+### Inspired By
+
+[![Static Badge](https://img.shields.io/badge/GitHub-tedhinklater%2Fplaynitesplashintro-white?style=for-the-badge&logo=github&logoColor=white&labelColor=black&color=%232e2e2e&link=https%3A%2F%2Fgithub.com%2Ftedhinklater%2Fplaynitesplashintro&link=https%3A%2F%2Fgithub.com%2Ftedhinklater%2Fplaynitesplashintro)](https://github.com/tedhinklater/playnitesplashintro)
