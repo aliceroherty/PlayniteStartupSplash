@@ -12,11 +12,12 @@
         Focusable="True"
         Loaded="Window_Loaded">
     <Grid>
-        <TextBlock 
-            Text="Loading..." 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center" 
-            FontSize="36" 
+        <MediaElement 
+            Name="SplashVideo" 
+            Source="pack://siteoforigin:,,,/Resources/splash.mp4" 
+            LoadedBehavior="Play" 
+            UnloadedBehavior="Stop" 
+            Stretch="Uniform" 
         />
     </Grid>
 </Window>
