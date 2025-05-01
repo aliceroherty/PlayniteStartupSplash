@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO.Pipes;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -20,9 +24,38 @@ namespace SplashScreen
     /// </summary>
     public partial class MainWindow : Window
     {
+        private const string PipeName = "SplashScreenPipe";
+
         public MainWindow()
         {
             InitializeComponent();
+            StartPipeServer();
+        }
+
+        private void StartPipeServer()
+        {
+            Task.Run(() =>
+            {
+                using (var pipeServer = new NamedPipeServerStream(PipeName, PipeDirection.In))
+                {
+                    pipeServer.WaitForConnection();
+                    using (var reader = new StreamReader(pipeServer))
+                    {
+                        while (pipeServer.IsConnected)
+                        {
+                            var command = reader.ReadLine();
+                            if (command == "Focus")
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    this.Activate();
+                                    this.Focus();
+                                });
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -32,18 +65,29 @@ namespace SplashScreen
             this.Top = 0;
             this.Width = SystemParameters.PrimaryScreenWidth;
             this.Height = SystemParameters.PrimaryScreenHeight;
+            this.Focus();
+            this.Activate();
         }
 
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            base.OnPreviewKeyDown(e);
+            e.Cancel = true; // Prevent the window from closing
 
-            // Check if Alt+F4 is pressed
-            if (e.Key == Key.F4 && (Keyboard.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
+            // Close the splash screen and terminate Playnite
+            try
             {
-                // Close the splash screen
-                this.Close();
+                var playniteProcesses = Process.GetProcessesByName("Playnite");
+                foreach (var process in playniteProcesses)
+                {
+                    process.Kill();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to close Playnite process: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            this.Close(); // Close the splash screen
         }
     }
 }
