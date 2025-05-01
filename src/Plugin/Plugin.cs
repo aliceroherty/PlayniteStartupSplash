@@ -40,7 +40,7 @@ namespace Plugin
         public override async void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {
             // Close splash screen if Playnite is closed before it is hidden
-            if (SplashManager.IsSplashScreenVisible)
+            if (SplashManager.SplashProcess != null && !SplashManager.SplashProcess.HasExited)
             {
                 await SplashManager.StopAsync();
             }

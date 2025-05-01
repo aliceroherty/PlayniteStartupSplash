@@ -8,17 +8,9 @@ namespace Plugin
 {
     internal class SplashManager
     {
-        private static Process splashProcess { get; set; }
+        public static Process SplashProcess { get; set; }
 
         private static readonly ILogger logger = LogManager.GetLogger("Startup Splash Screen");
-
-        public static bool IsSplashScreenVisible
-        {
-            get
-            {
-                return splashProcess != null && !splashProcess.HasExited;
-            }
-        }
 
         public static void Start(string splashResourcePath)
         {
@@ -41,7 +33,7 @@ namespace Plugin
                     }
 
                     logger.Info($"Attempting to start splash screen from path: {splashScreenExecutablePath}");
-                    splashProcess = Process.Start(splashScreenExecutablePath);
+                    SplashProcess = Process.Start(splashScreenExecutablePath);
                 }
                 catch (Exception ex)
                 {
@@ -57,9 +49,9 @@ namespace Plugin
             await Task.Delay(5000);
 
             // Close the splash screen process
-            if (splashProcess != null && !splashProcess.HasExited)
+            if (SplashProcess != null && !SplashProcess.HasExited)
             {
-                splashProcess.Kill();
+                SplashProcess.CloseMainWindow();
             }
 
             // Stop interceptor that blocks alt+f4 from closing other windows
