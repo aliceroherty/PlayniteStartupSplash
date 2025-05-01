@@ -10,7 +10,10 @@
             <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <CheckBox x:Name="EnableSplashScreenCheckBox" Margin="5" VerticalAlignment="Center" IsChecked="{Binding Settings.SplashEnabled}"/>
                 <TextBlock Text="Splash Screen Enabled" VerticalAlignment="Center"/>
-
+            </DockPanel>
+            <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding Settings.SplashEnabled}">
+                <CheckBox x:Name="FullScreenOnlyCheckBox" Margin="5" VerticalAlignment="Center" IsChecked="{Binding Settings.FullScreenOnly}"/>
+                <TextBlock Text="Enable for FullScreen Mode Only" VerticalAlignment="Center"/>
             </DockPanel>
             <StackPanel IsEnabled="{Binding Settings.SplashEnabled}">
                 <TextBlock Text="Splash Screen Video:" Margin="0,0,0,5"/>

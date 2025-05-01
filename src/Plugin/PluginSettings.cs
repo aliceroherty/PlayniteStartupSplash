@@ -15,6 +15,7 @@ namespace Plugin
     {
         private string splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
         private bool splashEnabled;
+        private bool fullScreenOnly = true;
 
         public PluginSettings(string splashPathIn, bool splashEnabledIn)
         {
@@ -43,6 +44,19 @@ namespace Plugin
                 if (splashEnabled != value)
                 {
                     SetValue(ref splashEnabled, value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
+        public bool FullScreenOnly
+        {
+            get => fullScreenOnly;
+            set
+            {
+                if (fullScreenOnly != value)
+                {
+                    SetValue(ref fullScreenOnly, value);
                     OnPropertyChanged();
                 }
             }
