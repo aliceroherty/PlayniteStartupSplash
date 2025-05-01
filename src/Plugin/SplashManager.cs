@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace Plugin
 {
@@ -16,6 +17,12 @@ namespace Plugin
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
         private static Process splashProcess { get; set; }
+
+        // Timer to monitor focus (Playnite can steal focus when it starts breaking the Alt+F4 functionality this workaround fixes it)
+        private static DispatcherTimer focusTimer { get; set; } = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(500)
+        };
 
         private static readonly ILogger logger = LogManager.GetLogger("Startup Splash Screen");
 
@@ -47,14 +54,8 @@ namespace Plugin
                     logger.Info($"Attempting to start splash screen from path: {splashScreenExecutablePath}");
                     splashProcess = Process.Start(splashScreenExecutablePath);
 
-                    // Wait for the splash screen process to initialize
-                    Thread.Sleep(500); // Adjust as needed
-
-                    // Bring the splash screen process to the foreground
-                    if (splashProcess != null)
-                    {
-                        SetForegroundWindow(splashProcess.MainWindowHandle);
-                    }
+                    // Begin polling for focus
+                    FocusSplashScreen();
                 }
                 catch (Exception ex)
                 {
@@ -68,11 +69,54 @@ namespace Plugin
             // Wait two seconds to give the UI some extra time to render
             await Task.Delay(5000);
 
+            // Stop polling for focus
+            RelinquishFocus();
+
             // Close the splash screen process
             if (splashProcess != null && !splashProcess.HasExited)
             {
                 splashProcess.Kill();
             }
+        }
+
+        private static void FocusSplashScreen(int retryCount = 0)
+        {
+            const int maxRetries = 20;
+            IntPtr mainWindowHandle = splashProcess.MainWindowHandle;
+
+            // Bring the splash screen process to the foreground
+            if (splashProcess != null && mainWindowHandle != IntPtr.Zero)
+            {
+                SetForegroundWindow(splashProcess.MainWindowHandle);
+
+                // Poll for focus every 500ms
+                focusTimer.Tick += (s, args) =>
+                {
+                    SetForegroundWindow(splashProcess.MainWindowHandle);
+                };
+
+                // Start polling for focus
+                focusTimer.Start();
+            }
+            else
+            {
+                if (retryCount >= maxRetries)
+                {
+                    logger.Error($"Failed to focus on the splash screen after max attempts ({maxRetries} attempts). Process may have failed to start.");
+                    return;
+                }
+                else
+                {
+                    // Wait for the splash screen process to initialize
+                    Thread.Sleep(50);
+                    FocusSplashScreen(retryCount + 1);
+                }
+            }
+        }
+
+        private static void RelinquishFocus()
+        {
+            focusTimer.Stop();
         }
     }
 }
