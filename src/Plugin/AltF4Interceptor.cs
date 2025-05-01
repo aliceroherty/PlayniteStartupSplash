@@ -1,7 +1,9 @@
 ﻿using Gma.System.MouseKeyHook;
+using System.Windows;
 
 namespace Plugin
 {
+    // FIX: This interceptor doesnt seem to be functioning as expected
     internal class AltF4Interceptor
     {
         private static IKeyboardMouseEvents globalHook;
@@ -26,9 +28,9 @@ namespace Plugin
             // Check if Alt+F4 is pressed
             if (e.KeyCode == System.Windows.Forms.Keys.F4 && e.Alt)
             {
-                e.Handled = true; // Block the key press
-
-                // TODO: Close the splash screen and terminate Playnite
+                // Block the key press
+                e.Handled = true;
+                SplashManager.StopAsync().RunSynchronously();
             }
         }
     }
