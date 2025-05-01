@@ -1,0 +1,7 @@
+﻿Id: Plugin_2b363259-a65d-4c5c-a044-11160be2cbb3
+Name: Startup Splash Screen
+Author: Alice Roherty-Carrier
+Version: 1.0
+Module: Plugin.dll
+Type: GenericPlugin
+Icon: icon.png
