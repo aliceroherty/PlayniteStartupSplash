@@ -10,11 +10,40 @@ namespace Plugin
 {
     public class PluginSettings : ObservableObject
     {
-        private string splashScreenPath = string.Empty;
-        private bool splashLauncherExePath = false;
+        private string splashPath;
+        private bool splashEnabled;
 
-        public string SplashScreenPath { get => splashScreenPath; set => SetValue(ref splashScreenPath, value); }
-        public bool SplashLauncherExePath { get => splashLauncherExePath; set => SetValue(ref splashLauncherExePath, value); }
+        public PluginSettings(string splashPathIn, bool splashEnabledIn)
+        {
+            this.SplashPath = splashPathIn;
+            this.SplashEnabled = splashEnabledIn;
+        }
+
+        public string SplashPath 
+        { 
+            get => splashPath; 
+            set 
+            {
+                if (splashPath != value)
+                {
+                    splashPath = value;
+                    OnPropertyChanged(nameof(splashPath));
+                }
+            } 
+        }
+
+        public bool SplashEnabled
+        {
+            get => splashEnabled;
+            set
+            {
+                if (splashEnabled != value)
+                {
+                    splashEnabled = value;
+                    OnPropertyChanged(nameof(splashEnabled));
+                }
+            }
+        }
     }
 
     public class PluginSettingsViewModel : ObservableObject, ISettings
@@ -48,27 +77,22 @@ namespace Plugin
             }
             else
             {
-                Settings = new PluginSettings();
+                Settings = new PluginSettings(string.Empty, true);
             }
         }
 
         public void BeginEdit()
         {
-            // Code executed when settings view is opened and user starts editing values.
             editingClone = Serialization.GetClone(Settings);
         }
 
         public void CancelEdit()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
             Settings = editingClone;
         }
 
         public void EndEdit()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
             plugin.SavePluginSettings(Settings);
         }
 

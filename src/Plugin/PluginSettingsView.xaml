@@ -5,7 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Splash Screen Vide/Image Path:"/>
-    </StackPanel>
+    <Grid>
+        <StackPanel Margin="25,10,25,0">
+            <TextBlock Text="Splash Screen Video:" Margin="0,0,0,5"/>
+            <DockPanel LastChildFill="True" Margin="0,0,0,8">
+                <TextBox x:Name="SplashScreenPathTextBox" Width="400" Margin="5,5,0,5" HorizontalAlignment="Left" Height="25" Text="{Binding Settings.SplashScreenPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button x:Name="BrowseButton" Content="Browse..." Width="76" Click="BrowseButton_Click" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+            </DockPanel>
+            <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <TextBlock Text="Enable Splash Screen:" VerticalAlignment="Center"/>
+                <CheckBox x:Name="EnableSplashScreenCheckBox" Margin="5" VerticalAlignment="Center"/>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>
