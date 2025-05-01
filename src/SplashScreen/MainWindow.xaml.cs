@@ -1,21 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO.Pipes;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SplashScreen
 {
@@ -24,38 +9,9 @@ namespace SplashScreen
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string PipeName = "SplashScreenPipe";
-
         public MainWindow()
         {
             InitializeComponent();
-            StartPipeServer();
-        }
-
-        private void StartPipeServer()
-        {
-            Task.Run(() =>
-            {
-                using (var pipeServer = new NamedPipeServerStream(PipeName, PipeDirection.In))
-                {
-                    pipeServer.WaitForConnection();
-                    using (var reader = new StreamReader(pipeServer))
-                    {
-                        while (pipeServer.IsConnected)
-                        {
-                            var command = reader.ReadLine();
-                            if (command == "Focus")
-                            {
-                                Dispatcher.Invoke(() =>
-                                {
-                                    this.Activate();
-                                    this.Focus();
-                                });
-                            }
-                        }
-                    }
-                }
-            });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
