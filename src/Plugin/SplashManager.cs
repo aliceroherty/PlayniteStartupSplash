@@ -32,8 +32,9 @@ namespace Plugin
                         return;
                     }
 
-                    logger.Info($"Attempting to start splash screen from path: {splashScreenExecutablePath}");
-                    SplashProcess = Process.Start(splashScreenExecutablePath);
+                    logger.Debug($"Attempting to start splash screen from path: {splashScreenExecutablePath}");
+                    string arguments = $"\"{splashResourcePath}\"";
+                    SplashProcess = Process.Start(splashScreenExecutablePath, arguments);
                 }
                 catch (Exception ex)
                 {

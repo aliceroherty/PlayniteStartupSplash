@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,16 +26,15 @@ namespace Plugin
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            // 1.WMV: Windows Media Video
-            // 2.AVI: Audio Video Interleave(if the appropriate codec is installed)
-            // 4.MPEG: MPEG - 1 and MPEG - 2(requires appropriate codecs)
-            // 5.ASF: Advanced Systems Format
-            // Open file dialog to select the splash screen image
+            string allowedFormats = string.Join(";", SettingsValidator.AllowedVideoFormats.Select(ext => $"*{ext}"));
+            string filter = $"Video Files ({allowedFormats})|{allowedFormats}";
+
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
-                Filter = "Video Files (*.mp4;*.wmv;*.avi;*.mpeg)|*.mp4;*.wmv;*.avi;*.mpeg",
+                Filter = filter,
                 Title = "Select Splash Screen Image"
             };
+
             if (dialog.ShowDialog() == true)
             {
                 // Set the selected file path to the SplashScreenPath property

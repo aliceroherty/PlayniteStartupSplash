@@ -14,7 +14,6 @@
     <Grid>
         <MediaElement
             Name="SplashVideo"
-            Source="pack://siteoforigin:,,,/Resources/splash.mp4"
             LoadedBehavior="Play"
             UnloadedBehavior="Stop"
             Stretch="Uniform"

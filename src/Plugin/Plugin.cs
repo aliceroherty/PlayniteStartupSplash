@@ -27,14 +27,20 @@ namespace Plugin
                 HasSettings = true
             };
 
-            // Display splash screen
-            SplashManager.Start("");
+            if (settings.Settings.SplashEnabled)
+            {
+                // Display splash screen
+                SplashManager.Start(settings.Settings.SplashPath);
+            }
         }
 
         public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            // Hide splash screen
-            await SplashManager.StopAsync();
+            if (settings.Settings.SplashEnabled)
+            {
+                // Hide splash screen
+                await SplashManager.StopAsync();
+            }
         }
 
         public override async void OnApplicationStopped(OnApplicationStoppedEventArgs args)

@@ -1,16 +1,19 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using Plugin.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Plugin
 {
     public class PluginSettings : ObservableObject
     {
-        private string splashPath;
+        private string splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
         private bool splashEnabled;
 
         public PluginSettings(string splashPathIn, bool splashEnabledIn)
@@ -26,8 +29,8 @@ namespace Plugin
             {
                 if (splashPath != value)
                 {
-                    splashPath = value;
-                    OnPropertyChanged(nameof(splashPath));
+                    SetValue(ref splashPath, value);
+                    OnPropertyChanged();
                 }
             } 
         }
@@ -39,8 +42,8 @@ namespace Plugin
             {
                 if (splashEnabled != value)
                 {
-                    splashEnabled = value;
-                    OnPropertyChanged(nameof(splashEnabled));
+                    SetValue(ref splashEnabled, value);
+                    OnPropertyChanged();
                 }
             }
         }
@@ -98,9 +101,9 @@ namespace Plugin
 
         public bool VerifySettings(out List<string> errors)
         {
-            // TODO: Validate file paths
             errors = new List<string>();
-            return true;
+            errors.AddRange(SettingsValidator.Validate(Settings));
+            return !errors.HasNonEmptyItems();
         }
     }
 }
