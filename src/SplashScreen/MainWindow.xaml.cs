@@ -24,26 +24,5 @@ namespace SplashScreen
             this.Focus();
             this.Activate();
         }
-
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true; // Prevent the window from closing
-
-            // Close the splash screen and terminate Playnite
-            try
-            {
-                var playniteProcesses = Process.GetProcessesByName("Playnite");
-                foreach (var process in playniteProcesses)
-                {
-                    process.Kill();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to close Playnite process: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            this.Close(); // Close the splash screen
-        }
     }
 }
