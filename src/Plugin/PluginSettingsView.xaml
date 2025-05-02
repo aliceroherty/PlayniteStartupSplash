@@ -9,17 +9,17 @@
         <StackPanel Margin="25,10,25,0">
             <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <CheckBox x:Name="EnableSplashScreenCheckBox" Margin="5" VerticalAlignment="Center" IsChecked="{Binding Settings.SplashEnabled}"/>
-                <TextBlock Text="Splash Screen Enabled" VerticalAlignment="Center"/>
+                <TextBlock Text="{StaticResource EnableSplashScreenText}" VerticalAlignment="Center"/>
             </DockPanel>
             <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding Settings.SplashEnabled}">
                 <CheckBox x:Name="FullScreenOnlyCheckBox" Margin="5" VerticalAlignment="Center" IsChecked="{Binding Settings.FullScreenOnly}"/>
-                <TextBlock Text="Enable for FullScreen Mode Only" VerticalAlignment="Center"/>
+                <TextBlock Text="{StaticResource FullScreenOnlyText}" VerticalAlignment="Center"/>
             </DockPanel>
             <StackPanel IsEnabled="{Binding Settings.SplashEnabled}">
-                <TextBlock Text="Splash Screen Video:" Margin="0,0,0,5"/>
+                <TextBlock Text="{StaticResource SplashVideoPickerText}" Margin="0,0,0,5"/>
                 <DockPanel LastChildFill="True" Margin="0,0,0,8">
                     <TextBox x:Name="SplashScreenPathTextBox" Width="1000" Margin="5,5,0,5" HorizontalAlignment="Left" Height="25" Text="{Binding Settings.SplashPath}"/>
-                    <Button x:Name="BrowseButton" Content="Browse..." Width="76" Click="BrowseButton_Click" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    <Button x:Name="BrowseButton" Content="{StaticResource BrowseButtonText}" Width="76" Click="BrowseButton_Click" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0"/>
                 </DockPanel>
             </StackPanel>
         </StackPanel>

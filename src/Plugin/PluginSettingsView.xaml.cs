@@ -26,8 +26,8 @@ namespace Plugin
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
-            string allowedFormats = string.Join(";", SettingsValidator.AllowedVideoFormats.Select(ext => $"*{ext}"));
-            string filter = $"Video Files ({allowedFormats})|{allowedFormats}";
+            var allowedFormats = string.Join(";", SettingsValidator.AllowedVideoFormats.Select(ext => $"*{ext}"));
+            var filter = $"Video Files ({allowedFormats})|{allowedFormats}";
 
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
