@@ -1,0 +1,31 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-rebase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Fetch full history
+        run: git fetch --unshallow
+
+      - name: Check for merge commits
+        run: |
+          if git log --merges origin/main..HEAD | grep -q "."; then
+            echo "Merge commits detected. Please squash and rebase your branch."
+            exit 1
+          fi
+
+      - name: Verify branch is rebased onto main
+        run: |
+          git fetch origin main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            echo "Branch is not rebased onto main. Please rebase your branch onto main."
+            exit 1
+          fi
