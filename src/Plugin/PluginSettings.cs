@@ -13,9 +13,9 @@ namespace Plugin
 {
     public class PluginSettings : ObservableObject
     {
-        private string splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
-        private bool splashEnabled;
-        private bool fullScreenOnly = true;
+        private string _splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
+        private bool _splashEnabled;
+        private bool _fullScreenOnly = true;
 
         public PluginSettings(string splashPathIn, bool splashEnabledIn)
         {
@@ -25,12 +25,12 @@ namespace Plugin
 
         public string SplashPath 
         { 
-            get => splashPath; 
+            get => _splashPath; 
             set 
             {
-                if (splashPath != value)
+                if (_splashPath != value)
                 {
-                    SetValue(ref splashPath, value);
+                    SetValue(ref _splashPath, value);
                     OnPropertyChanged();
                 }
             } 
@@ -38,12 +38,12 @@ namespace Plugin
 
         public bool SplashEnabled
         {
-            get => splashEnabled;
+            get => _splashEnabled;
             set
             {
-                if (splashEnabled != value)
+                if (_splashEnabled != value)
                 {
-                    SetValue(ref splashEnabled, value);
+                    SetValue(ref _splashEnabled, value);
                     OnPropertyChanged();
                 }
             }
@@ -51,12 +51,12 @@ namespace Plugin
         
         public bool FullScreenOnly
         {
-            get => fullScreenOnly;
+            get => _fullScreenOnly;
             set
             {
-                if (fullScreenOnly != value)
+                if (_fullScreenOnly != value)
                 {
-                    SetValue(ref fullScreenOnly, value);
+                    SetValue(ref _fullScreenOnly, value);
                     OnPropertyChanged();
                 }
             }

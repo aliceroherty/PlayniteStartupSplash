@@ -2,4 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <!-- Localized Strings -->
+    <sys:String x:Key="BrowseButtonText">Browse...</sys:String>
+    <sys:String x:Key="EnableSplashScreenText">Enable Splash Screen</sys:String>
+    <sys:String x:Key="FullScreenOnlyText">Enable for FullScreen Mode Only</sys:String>
+    <sys:String x:Key="SplashVideoPickerText">Splash Screen Video</sys:String>
 </ResourceDictionary>

@@ -6,20 +6,20 @@ namespace Plugin
     // FIX: This interceptor doesnt seem to be functioning as expected
     internal class AltF4Interceptor
     {
-        private static IKeyboardMouseEvents globalHook;
+        private static IKeyboardMouseEvents _globalHook;
 
         public static void Start()
         {
-            globalHook = Hook.GlobalEvents();
-            globalHook.KeyDown += OnKeyDown;
+            _globalHook = Hook.GlobalEvents();
+            _globalHook.KeyDown += OnKeyDown;
         }
 
         public static void Stop()
         {
-            if (globalHook != null)
+            if (_globalHook != null)
             {
-                globalHook.KeyDown -= OnKeyDown;
-                globalHook.Dispose();
+                _globalHook.KeyDown -= OnKeyDown;
+                _globalHook.Dispose();
             }
         }
 
