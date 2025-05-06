@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace Plugin
 {
@@ -43,6 +44,33 @@ namespace Plugin
             }
         }
 
+        private void PresetPicker_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            ComboBox presetPicker = sender as ComboBox;
 
+            if (presetPicker != null && presetPicker.ItemsSource == null)
+            {
+                presetPicker.ItemsSource = (DataContext as PluginSettingsViewModel).Settings.SplashPresets;
+                presetPicker.DisplayMemberPath = "Name";
+                presetPicker.SelectedValuePath = "Path";
+            }
+        }
+
+        private void RadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton)
+            {
+                if (radioButton.Name == "CustomRadioButton")
+                {
+                    CustomVideoPickerSection.Visibility = Visibility.Visible;
+                    PresetPickerSection.Visibility = Visibility.Collapsed;
+                }
+                else if (radioButton.Name == "PresetRadioButton")
+                {
+                    CustomVideoPickerSection.Visibility = Visibility.Collapsed;
+                    PresetPickerSection.Visibility = Visibility.Visible;
+                }
+            }
+        }
     }
 }

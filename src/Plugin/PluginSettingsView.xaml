@@ -7,6 +7,8 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <Grid>
         <StackPanel Margin="25,10,25,0">
+            <TextBlock Text="{StaticResource General}" Margin="0,0,0,5" FontSize="25"/>
+            <Separator Margin="0,0,0,8" />
             <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
                 <CheckBox x:Name="EnableSplashScreenCheckBox" Margin="5" VerticalAlignment="Center" IsChecked="{Binding Settings.SplashEnabled}"/>
                 <TextBlock Text="{StaticResource EnableSplashScreenText}" VerticalAlignment="Center"/>
@@ -16,11 +18,32 @@
                 <TextBlock Text="{StaticResource FullScreenOnlyText}" VerticalAlignment="Center"/>
             </DockPanel>
             <StackPanel IsEnabled="{Binding Settings.SplashEnabled}">
-                <TextBlock Text="{StaticResource SplashVideoPickerText}" Margin="0,0,0,5"/>
-                <DockPanel LastChildFill="True" Margin="0,0,0,8">
-                    <TextBox x:Name="SplashScreenPathTextBox" Width="1000" Margin="5,5,0,5" HorizontalAlignment="Left" Height="25" Text="{Binding Settings.SplashPath}"/>
-                    <Button x:Name="BrowseButton" Content="{StaticResource BrowseButtonText}" Width="76" Click="BrowseButton_Click" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                <TextBlock Text="{StaticResource SplashScreenSettingsText}" Margin="0,0,0,5" FontSize="25"/>
+                <Separator Margin="0,0,0,8" />
+                <TextBlock Text="{StaticResource SplashTypeText}" Margin="0,0,0,8" FontSize="18" />
+                <DockPanel Margin="0,0,0,15">
+                    <RadioButton x:Name="PresetRadioButton" GroupName="SplashType" Content="{StaticResource SplashTypePreset}" Click="RadioButton_Click"/>
+                    <RadioButton x:Name="CustomRadioButton" GroupName="SplashType" Content="{StaticResource SplashTypeCustom}" Margin="7,0,0,0" Click="RadioButton_Click"/>
                 </DockPanel>
+                <StackPanel x:Name="CustomVideoPickerSection" Visibility="Collapsed">
+                    <TextBlock Text="{StaticResource SplashVideoPickerText}" Margin="0,0,0,5" FontSize="14"/>
+                    <DockPanel LastChildFill="True" Margin="0,0,0,8">
+                        <TextBox x:Name="SplashScreenPathTextBox" Width="1000" Margin="5,5,0,5" HorizontalAlignment="Left" Height="25" Text="{Binding Settings.SplashPath}"/>
+                        <Button x:Name="BrowseButton" Content="{StaticResource BrowseButtonText}" Width="76" Click="BrowseButton_Click" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel x:Name="PresetPickerSection" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left" IsEnabled="{Binding Settings.SplashEnabled}" Visibility="Collapsed">
+                    <TextBlock Text="{StaticResource PresetPickerText}" VerticalAlignment="Center" FontSize="14"/>
+                    <ComboBox
+                        x:Name="PresetPicker"
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        IsReadOnly="True"
+                        IsEditable="True"
+                        Text="{StaticResource PresetPickerPlaceholder}"
+                        GotMouseCapture="PresetPicker_GotMouseCapture">
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

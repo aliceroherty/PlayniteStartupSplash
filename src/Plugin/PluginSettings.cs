@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using Plugin.Models;
 using Plugin.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,20 @@ namespace Plugin
     public class PluginSettings : ObservableObject
     {
         private string _splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
+
         private bool _splashEnabled;
+
         private bool _fullScreenOnly = true;
+
+        private SplashVideo _selectedSplashVideo;
+
+        public List<SplashVideo> SplashPresets { get; } = new List<SplashVideo>()
+        {
+            new SplashVideo ("Gameplay", @"pack://siteoforigin:,,,/Resources/gameplay-splash.mp4"),
+            new SplashVideo ("Loading Spinner", @"pack://siteoforigin:,,,/Resources/splash-loading-circle.mp4"),
+            new SplashVideo ("Gameplay Splash", @"pack://siteoforigin:,,,/Resources/gameplay-splash.mp4"),
+            new SplashVideo ("Xbox 360", @"pack://siteoforigin:,,,/Resources/xbox-360-splash.mp4"),
+        };
 
         public PluginSettings(string splashPathIn, bool splashEnabledIn)
         {
@@ -57,6 +70,19 @@ namespace Plugin
                 if (_fullScreenOnly != value)
                 {
                     SetValue(ref _fullScreenOnly, value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public SplashVideo SelectedSplashVideo
+        {
+            get => _selectedSplashVideo;
+            set
+            {
+                if (_selectedSplashVideo != value)
+                {
+                    SetValue(ref _selectedSplashVideo, value);
                     OnPropertyChanged();
                 }
             }
