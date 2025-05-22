@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using Plugin.Models;
 using Plugin.Utils;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,13 @@ namespace Plugin
 {
     public class PluginSettings : ObservableObject
     {
-        private string _splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
+        private string _splashPath;
+
         private bool _splashEnabled;
-        private bool _fullScreenOnly = true;
+
+        private bool _fullScreenOnly;
+
+        private SplashType _splashType = SplashType.CUSTOM;
 
         public PluginSettings(string splashPathIn, bool splashEnabledIn)
         {
@@ -57,6 +62,19 @@ namespace Plugin
                 if (_fullScreenOnly != value)
                 {
                     SetValue(ref _fullScreenOnly, value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public SplashType SplashType
+        {
+            get => _splashType;
+            set
+            {
+                if (_splashType != value)
+                {
+                    SetValue(ref _splashType, value);
                     OnPropertyChanged();
                 }
             }

@@ -52,6 +52,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\SplashType.cs" />
+    <Compile Include="Models\SplashPresets.cs" />
+    <Compile Include="Models\SplashVideo.cs" />
     <Compile Include="Utils\AltF4Interceptor.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="PluginSettings.cs" />

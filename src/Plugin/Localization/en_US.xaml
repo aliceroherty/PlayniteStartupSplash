@@ -7,4 +7,11 @@
     <sys:String x:Key="EnableSplashScreenText">Enable Splash Screen</sys:String>
     <sys:String x:Key="FullScreenOnlyText">Enable for FullScreen Mode Only</sys:String>
     <sys:String x:Key="SplashVideoPickerText">Splash Screen Video</sys:String>
+    <sys:String x:Key="PresetPickerText">Splash Presets</sys:String>
+    <sys:String x:Key="PresetPickerPlaceholder">-- Select a Preset --</sys:String>
+    <sys:String x:Key="SplashTypeText">Splash Type</sys:String>
+    <sys:String x:Key="SplashTypeCustom">Custom</sys:String>
+    <sys:String x:Key="SplashTypePreset">Preset</sys:String>
+    <sys:String x:Key="General">General</sys:String>
+    <sys:String x:Key="SplashScreenSettingsText">Splash Screen Settings</sys:String>
 </ResourceDictionary>
