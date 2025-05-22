@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Plugin.Models
 {
-    // TODO: All presets except ps5 are HEVC which windows cant run we should probably just convert them
     internal static class SplashPresets
     {
         private static readonly string _pluginDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
