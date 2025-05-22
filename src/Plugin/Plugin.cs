@@ -26,13 +26,15 @@ namespace Plugin
             }
         }
 
-        public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
-        {
-            if (_settings.Settings.SplashEnabled)
-            {
-                await SplashManager.StopAsync();
-            }
-        }
+        //public override async void OnApplicationStarted(OnApplicationStartedEventArgs args)
+        //{
+        //    if (_settings.Settings.SplashEnabled)
+        //    {
+        //        // TODO: Add option to stop video as soon as Playnite is ready
+        //        // Default behaviour will now be to let the entire video play
+        //        await SplashManager.StopAsync();
+        //    }
+        //}
 
         public override async void OnApplicationStopped(OnApplicationStoppedEventArgs args)
         {

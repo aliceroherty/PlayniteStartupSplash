@@ -1,4 +1,5 @@
-﻿using Plugin.Utils;
+﻿using Plugin.Models;
+using Plugin.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,36 @@ namespace Plugin
             InitializeComponent();
         }
 
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is PluginSettingsViewModel viewModel)
+            {
+                var presetPicker = PresetPicker;
+                if (presetPicker != null && presetPicker.ItemsSource == null)
+                {
+                    presetPicker.ItemsSource = SplashPresets.ALL;
+                    presetPicker.DisplayMemberPath = "Name";
+                    presetPicker.SelectedValuePath = "Path";
+                }
+
+                if (viewModel.Settings.SplashType == SplashType.CUSTOM)
+                {
+                    CustomRadioButton.IsChecked = true;
+                    CustomVideoPickerSection.Visibility = Visibility.Visible;
+                    PresetPickerSection.Visibility = Visibility.Collapsed;
+                }
+                else if (viewModel.Settings.SplashType == SplashType.PRESET)
+                {
+                    PresetRadioButton.IsChecked = true;
+                    CustomVideoPickerSection.Visibility = Visibility.Collapsed;
+                    PresetPickerSection.Visibility = Visibility.Visible;
+
+                    var selectedPreset = SplashPresets.ALL.FirstOrDefault(preset => preset.Path == viewModel.Settings.SplashPath);
+                    PresetPicker.SelectedIndex = SplashPresets.ALL.IndexOf(selectedPreset);
+                }
+            }
+        }
+
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
         {
             var allowedFormats = string.Join(";", SettingsValidator.AllowedVideoFormats.Select(ext => $"*{ext}"));
@@ -44,32 +75,34 @@ namespace Plugin
             }
         }
 
-        private void PresetPicker_GotMouseCapture(object sender, MouseEventArgs e)
-        {
-            ComboBox presetPicker = sender as ComboBox;
-
-            if (presetPicker != null && presetPicker.ItemsSource == null)
-            {
-                presetPicker.ItemsSource = (DataContext as PluginSettingsViewModel).Settings.SplashPresets;
-                presetPicker.DisplayMemberPath = "Name";
-                presetPicker.SelectedValuePath = "Path";
-            }
-        }
-
         private void RadioButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton radioButton)
             {
+                var viewModel = (PluginSettingsViewModel)DataContext;
+
                 if (radioButton.Name == "CustomRadioButton")
                 {
                     CustomVideoPickerSection.Visibility = Visibility.Visible;
                     PresetPickerSection.Visibility = Visibility.Collapsed;
+                    viewModel.Settings.SplashType = SplashType.CUSTOM;
                 }
                 else if (radioButton.Name == "PresetRadioButton")
                 {
                     CustomVideoPickerSection.Visibility = Visibility.Collapsed;
                     PresetPickerSection.Visibility = Visibility.Visible;
+                    viewModel.Settings.SplashType = SplashType.PRESET;
                 }
+            }
+        }
+
+        private void PresetPicker_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            SplashVideo selectedPreset = (SplashVideo)((ComboBox)sender).SelectedItem;
+            if (selectedPreset != null)
+            {
+                var viewModel = (PluginSettingsViewModel)DataContext;
+                viewModel.Settings.SplashPath = selectedPreset.Path;
             }
         }
     }

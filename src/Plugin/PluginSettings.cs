@@ -14,21 +14,13 @@ namespace Plugin
 {
     public class PluginSettings : ObservableObject
     {
-        private string _splashPath = @"pack://siteoforigin:,,,/Resources/splash.mp4";
+        private string _splashPath;
 
         private bool _splashEnabled;
 
-        private bool _fullScreenOnly = true;
+        private bool _fullScreenOnly;
 
-        private SplashVideo _selectedSplashVideo;
-
-        public List<SplashVideo> SplashPresets { get; } = new List<SplashVideo>()
-        {
-            new SplashVideo ("Gameplay", @"pack://siteoforigin:,,,/Resources/gameplay-splash.mp4"),
-            new SplashVideo ("Loading Spinner", @"pack://siteoforigin:,,,/Resources/splash-loading-circle.mp4"),
-            new SplashVideo ("Gameplay Splash", @"pack://siteoforigin:,,,/Resources/gameplay-splash.mp4"),
-            new SplashVideo ("Xbox 360", @"pack://siteoforigin:,,,/Resources/xbox-360-splash.mp4"),
-        };
+        private SplashType _splashType = SplashType.CUSTOM;
 
         public PluginSettings(string splashPathIn, bool splashEnabledIn)
         {
@@ -75,14 +67,14 @@ namespace Plugin
             }
         }
 
-        public SplashVideo SelectedSplashVideo
+        public SplashType SplashType
         {
-            get => _selectedSplashVideo;
+            get => _splashType;
             set
             {
-                if (_selectedSplashVideo != value)
+                if (_splashType != value)
                 {
-                    SetValue(ref _selectedSplashVideo, value);
+                    SetValue(ref _splashType, value);
                     OnPropertyChanged();
                 }
             }

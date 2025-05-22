@@ -5,8 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <Grid>
-        <StackPanel Margin="25,10,25,0">
+    <Grid
+        Loaded="Grid_Loaded">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="57*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="25,10,25,0" Grid.RowSpan="3">
             <TextBlock Text="{StaticResource General}" Margin="0,0,0,5" FontSize="25"/>
             <Separator Margin="0,0,0,8" />
             <DockPanel LastChildFill="True" Margin="0,0,0,8" VerticalAlignment="Center" HorizontalAlignment="Left">
@@ -41,7 +50,7 @@
                         IsReadOnly="True"
                         IsEditable="True"
                         Text="{StaticResource PresetPickerPlaceholder}"
-                        GotMouseCapture="PresetPicker_GotMouseCapture">
+                        SelectionChanged="PresetPicker_SelectionChanged">
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
