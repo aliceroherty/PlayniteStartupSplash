@@ -1,5 +1,13 @@
 # Playnite Startup Splash Screen Plugin
 
+## 🚧 **Beta Release Available!**
+
+[Download the Latest Release](https://github.com/aliceroherty/PlayniteStartupSplash/releases/download/v1.0.0-beta.1/StartupScreen_2b363259-a65d-4c5c-a044-11160be2cbb3_1_0.pext)
+
+### Installation Instructions
+
+Download the `.pext` file from the link above or [**Releases**](https://github.com/aliceroherty/PlayniteStartupSplash/releases) page on this repository. Double-click the file and Playnite should prompt you to install the extension.
+
 ## Overview
 
 A plugin for Playnite to show a splash screen on startup until Playnite has had time to load. This will ensure the windows desktop is no longer shown while launching Playnite. Especially useful for Fullscreen mode when you want a console-like UX.
